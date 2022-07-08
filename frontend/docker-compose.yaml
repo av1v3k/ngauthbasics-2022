@@ -1,0 +1,10 @@
+version: "3"
+services:
+  ngauthweb:
+    build:
+      dockerfile: "Dockerfile.dev"
+    ports: 
+      - "4200:4200"
+    volumes:
+      - "/frontend/node_modules"
+      - ".:/frontend"
