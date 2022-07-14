@@ -17,7 +17,11 @@ Ref:
 
 https://www.youtube.com/watch?v=i7tTwv4WVn0
 
+******--------
 
+FRONTEND:
+========
+******--------
 
 Part 1:
 =====
@@ -102,16 +106,106 @@ The above error is due to dockerfile path or name is wrong, where the build file
 
 	Docker-compose up -d
 
+Backend:
+=======
+
+Part 1:
+======
+
+1. Create base image with a docker node js version.
+    
+    docker build -f Dockerfile.dev -t baseimagenodejs:0.1 .
+
+2. Run the image as container and name it.
+
+    docker run -itd -v ${PWD}:/backend --name ng_auth_backend baseimagenodejs:0.1
+
+ 3. Initialize the Container with Express js installation.
+
+    docker exec -it ng_auth_backend npm i -g express@4.17.3 --directory=.
+    (Optional for updating npm) - npm install -g npm@8.13.2
+
+ 4. Install express and body parser to the container.
+
+    docker exec -it ng_auth_backend npm i express body-parser --save --directory=.
+
+    Now, locally, we have created backend server express, body-parser
+
+ 5. (Optional) if need to change the permission, execute as below,
+
+sudo chown -R $USER:$(id -gn $USER) ./*
+
+ 6. Remove the container.
+
+	docker rm -f <container-name>
+
+Part 2:
+======
+
+1. Create a Dockerfile.dev locally with below contents inside the file.
+
+FROM node:16.15.0-alpine
+WORKDIR /backend
+COPY package.json ./
+RUN npm i -g express@4.17.3
+RUN npm i express@4.17.3 body-parser --save
+EXPOSE 3000
+CMD ["node", "server"]
+
+2. Now, create a docker-compose.yaml file and content as below,
+
+version: "3"
+services:
+  web:
+    build: .
+    ports: 
+      - "3000:3000"
+    volumes:
+      - "/backend/node_modules"
+      - ".:/backend"
+
+3. Now run the following command,
+	docker-compose up
+
+4. It will hit up with error as below,
+
+failed to solve: rpc error: code = Unknown desc = failed to solve with frontend dockerfile.v0: failed to read dockerfile: open /var/lib/docker/tmp/buildkit-mount478467770/Dockerfile: no such file or directory
+
+The above error is due to dockerfile path or name is wrong, where the build filed is modified to as below,
+
+    build:
+      dockerfile: "Dockerfile.dev"
+
+//5. To create a component or service in the container,
+
+//	docker-compose exec ngauthweb ng g c xyz
+
+6. To run the docker-compose command in detatched mode,
+
+	Docker-compose up -d
+
+NOTE: mistakes learned.
+1. always created a file locally and execute the docker-compose command.
+2. so that it avoids creating the content in yml file.
+
+Future:
+======
+
+1. How to give name of the container using docker-compose file, as image name was created as below ?
+    image: base_express_server
 
 Other Commands for reference:
 ===================
-
+docker-compose up -d --build #To re-build the container/running container.
+docker-compose up --build #To not run the docker image as container in detatched mode for debugging
 docker images
-docker image rm <imageID> #remove image by image ID
+docker image rm <imageID> #remove image by image ID.
+docker rm <containerID> #for removing the container ID.
 docker build -f ./Dockerfile.dev -t ngauth_frontend:0.1 .
 docker ps #runningcontainers
 docker stop <containerID>
 docker container prune #removes all stopped containers
 docker run -t ngauth_frontend:0.1 #run the container - doubtful
+docker exec -it ngauthserver cat package.json #access ruuning container and execute command
 
 ================ Angular Authentication Project Complete ================

@@ -3,6 +3,8 @@ services:
   ngauthweb:
     build:
       dockerfile: "Dockerfile.dev"
+    image: ngauth_frontend
+    container_name: ngauthfrontend
     ports: 
       - "4200:4200"
     volumes:

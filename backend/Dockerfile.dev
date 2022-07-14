@@ -1,0 +1,9 @@
+FROM node:16.15.0-alpine
+WORKDIR /backend
+COPY package.json ./
+RUN npm install
+RUN npm i -g express@4.17.3
+RUN npm i express@4.17.3 body-parser mongoose --save
+COPY server.js ./
+EXPOSE 3000
+CMD ["node", "server"]

@@ -1,0 +1,12 @@
+version: "3"
+services:
+  back:
+    build:
+      dockerfile: "Dockerfile.dev"
+    #image: base_express_server
+    container_name: ngauthserver
+    ports: 
+      - "3000:3000"
+    volumes:
+      - "/backend/node_modules"
+      - ".:/backend"
