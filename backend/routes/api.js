@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const User = require("../models/user");
 
-const db = "mongodb+srv://admin:admin@atlascluster.h5xpu.mongodb.net/eventsdb?retryWrites=true&w=majority"; //connection string to Mongo Atlas
+const db = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@atlascluster.h5xpu.mongodb.net/eventsdb?retryWrites=true&w=majority`; //connection string to Mongo Atlas
 
 mongoose.connect(db, (err) => {
     if(err) {
