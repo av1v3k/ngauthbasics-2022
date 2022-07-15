@@ -215,7 +215,7 @@ docker container prune #removes all stopped containers
 docker run -t ngauth_frontend:0.1 #run the container - doubtful
 docker exec -it ngauthserver cat package.json #access ruuning container and execute command
 
-### Thoughts
+# Thoughts
 
 ## Problem:
 ===========
