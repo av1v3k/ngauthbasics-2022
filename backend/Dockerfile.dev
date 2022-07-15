@@ -6,4 +6,4 @@ RUN npm i -g express@4.17.3
 RUN npm i express@4.17.3 body-parser mongoose --save
 COPY server.js ./
 EXPOSE 3000
-CMD ["node", "server"]
+CMD ["npm", "start"]

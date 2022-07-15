@@ -12,6 +12,8 @@ Goal:
 Future:
 
 1. Automate all in one single file execution.
+2. Data put in User collection is not unique. That is database accepts duplicates.
+3. Add Nodemon to server.js
 
 Ref:
 
@@ -212,5 +214,12 @@ docker stop <containerID>
 docker container prune #removes all stopped containers
 docker run -t ngauth_frontend:0.1 #run the container - doubtful
 docker exec -it ngauthserver cat package.json #access ruuning container and execute command
+
+### Thoughts
+
+## Problem:
+===========
+When installing packages, running npm command in container installs and it reflects locally as well.
+But, when installing locally, why it is NOT affecting in container ?
 
 ================ Angular Authentication Project Complete ================
