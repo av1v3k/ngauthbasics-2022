@@ -196,9 +196,12 @@ Future:
 
 Other Commands for reference:
 ===================
-docker-compose up -d --build #To re-build the container/running container.
-docker-compose up --build #To not run the docker image as container in detatched mode for debugging
-docker images
+#To re-build the container/running container.
+  ```docker-compose up -d --build``` 
+#To not run the docker image as container in detatched mode for debugging
+  ```docker-compose up --build```
+#To list images
+  ```docker images```
 docker image rm <imageID> #remove image by image ID.
 docker rm <containerID> #for removing the container ID.
 docker build -f ./Dockerfile.dev -t ngauth_frontend:0.1 .
