@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const allEvents = require('../events');
@@ -18,10 +19,6 @@ mongoose.connect(db, (err) => {
     console.log('Connected to mongoDB');
 });
 
-router.get('/', (req, res) => {
-    res.send('From API route');
-})
-
 router.post('/register', (req, res) => {
     let userData = req.body;
     let user = new User(userData);
@@ -29,7 +26,9 @@ router.post('/register', (req, res) => {
         if (error) {
             console.log(error);
         } else {
-            res.status(200).send(registeredUser)
+            const payload = { subject: registeredUser._id };
+            const token = jwt.sign(payload, "secretkey");
+            res.status(200).send({ token });
         }
     });
 });
@@ -46,7 +45,9 @@ router.post('/login', (req, res) => {
             } else if (userData.password !== user.password) {
                 res.status(401).send('Invalid Password');
             } else {
-                res.status(200).send(user);
+                const payload = { subject: user._id };
+                const token = jwt.sign(payload, "secretkey");
+                res.status(200).send({ token });
             }
         }
     });

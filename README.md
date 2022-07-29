@@ -14,6 +14,7 @@ Future:
 1. Automate all in one single file execution.
 2. Data put in User collection is not unique. That is database accepts duplicates.
 3. Add Nodemon to server.js
+4. Do NOT use 'any' keyword anywhere.
 
 Ref:
 

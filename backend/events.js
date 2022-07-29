@@ -30,25 +30,25 @@ const specialEvents = [
         "_id": "1",
         "name": "Print Expo",
         "description": "lorem ipsum",
-        "date": "This is just sample data",
+        "date": "2022-05-11T03:24:45.729Z",
     },
     {
         "_id": "2",
         "name": "Print Expo",
         "description": "lorem ipsum",
-        "date": "This is just sample data",
+        "date": "2022-05-10T03:24:45.729Z",
     },
     {
         "_id": "3",
         "name": "Print Expo",
         "description": "lorem ipsum",
-        "date": "This is just sample data",
+        "date": "2022-02-17T03:24:45.729Z",
     },
     {
         "_id": "4",
         "name": "Print Expo",
         "description": "lorem ipsum",
-        "date": "This is just sample data",
+        "date": "2022-02-11T03:24:45.729Z",
     }
 ];
 
