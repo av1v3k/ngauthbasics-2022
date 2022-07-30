@@ -19,6 +19,28 @@ mongoose.connect(db, (err) => {
     console.log('Connected to mongoDB');
 });
 
+function verifyToken(req, res, next) {
+    console.log(req.headers.authorization);
+    if (!req.headers.authorization) {
+        return res.status(401).send('Unauthorized request');
+    }
+    let token = req.headers.authorization.split(' ')[1];
+    if (token === 'null') {
+        return res.status(401).send('Unauthorized request');
+    }
+    jwt.verify(token, 'secretkey', (err, decoded) => {
+        if(err && err.message === "jwt malformed") {
+            res.status(500).send('TOKEN_INVALID');
+        }
+        let payload = decoded;
+        if (!payload) {
+            return res.status(401).send('Unauthorized request and payload is empty');
+        }
+        req.userId = payload.subject;
+    });
+    next();
+}
+
 router.post('/register', (req, res) => {
     let userData = req.body;
     let user = new User(userData);
@@ -60,7 +82,7 @@ router.get('/events', (req, res) => {
 
 });
 
-router.get('/specialevents', (req, res) => {
+router.get('/specialevents', verifyToken, (req, res) => {
     const events = allEvents.specialEvents;
 
     res.json(events);
